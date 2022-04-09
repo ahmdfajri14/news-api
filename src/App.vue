@@ -1,19 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <nav-bar>
+      <v-main>
+        <card-news :item="listArticle" />
+      </v-main>
+    </nav-bar>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import CardNews from "./components/CardNews.vue";
+import NavBar from "./components/NavBar.vue";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: { CardNews, NavBar },
+  computed: {
+    listArticle() {
+      return this.$store.state.news.article;
+    },
+  },
+  methods: {
+    fetchNews() {
+      this.$store.dispatch("news/fetchArticle");
+    },
+  },
+  mounted() {
+    this.fetchNews();
+  },
+};
 </script>
 
 <style>
